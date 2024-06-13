@@ -9,6 +9,7 @@ router.post('/sign-up',UserController.signup)
 router.post('/login',UserController.login)
 // Get all users
 router.get('/allUser',checkAuthMiddleware.checkAuth, UserController.showAllUser);
+router.get('/:id',checkAuthMiddleware.checkAuth, UserController.showSingle);
 
 // Delete User
 router.delete('/delete',checkAuthMiddleware.checkAuth, UserController.deleteUser);

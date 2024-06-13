@@ -5,6 +5,6 @@ model Post {
   title     String   @db.VarChar(255)
   content   String?
   imageUrl  String?
-  author    User     @relation("UserToPost", fields: [authorId], references: [id])
+  author    User     @relation("UserToPost", fields: [authorId], references: [id], onDelete: Cascade)
   authorId  Int
 }

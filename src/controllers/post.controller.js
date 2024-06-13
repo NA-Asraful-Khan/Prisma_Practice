@@ -42,6 +42,10 @@ const showAllPost=async (req, res) => {
     }
   }
 
+const showSinglePost=async(req,res)=>{
+    
+}
+
 
 
 

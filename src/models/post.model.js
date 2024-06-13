@@ -31,12 +31,13 @@ class PostModel {
           });
     }
 
-    static async getSingleUser(date) {
-        return await prisma.user.findUnique({
-            where: { email: date.email }
+    static async getSinglePost(data) {
+        return await prisma.post.findUnique({
+            where: { email: data.email } 
         });
     }
 
+    
 
 
     static async deleteUser(userid) {
