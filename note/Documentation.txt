@@ -1,0 +1,99 @@
+LINK: https://chatgpt.com/share/d4693252-2671-405a-a3b2-a0e16ca87776
+
+Step 1: Organize Your Prisma Schema Files
+my-app/
+├── node_modules/
+├── prisma/
+│   ├── models/
+│   │   └── User.prisma
+│   └── schema.prisma
+├── src/
+│   ├── models/
+│   │   └── user.model.js
+│   ├── routes/
+│   │   └── user.routes.js
+│   ├── prisma/
+│   │   └── prismaClient.js
+│   └── app.js
+├── .env
+├── package.json
+└── package-lock.json
+
+
+Step 2: Create Model Files in prisma/models/
+Create your model files in the prisma/models/ directory. For example, User.prisma:
+
+// prisma/models/User.prisma
+model User {
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  name  String?
+}
+
+Step 3: Create a Concatenation Script
+Create a script to concatenate your schema files into a single file. For example, concatSchemas.js:
+
+const fs = require('fs');
+const path = require('path');
+
+const schemaPath = path.join(__dirname, 'prisma', 'schema.prisma');
+const modelsPath = path.join(__dirname, 'prisma', 'models');
+const combinedSchemaPath = path.join(__dirname, 'prisma', 'combined-schema.prisma');
+
+// Read base schema
+const baseSchema = fs.readFileSync(schemaPath, 'utf-8');
+
+// Read model files
+const modelFiles = fs.readdirSync(modelsPath).filter(file => file.endsWith('.prisma'));
+const modelSchemas = modelFiles.map(file => fs.readFileSync(path.join(modelsPath, file), 'utf-8'));
+
+// Combine schemas
+const combinedSchema = [baseSchema, ...modelSchemas].join('\n\n');
+
+// Write to combined schema file
+fs.writeFileSync(combinedSchemaPath, combinedSchema);
+
+console.log('Schema combined successfully.');
+
+Step 4: Update prisma/schema.prisma
+Ensure your prisma/schema.prisma contains only the datasource and generator definitions:// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+Step 5: Update Your package.json Scripts
+Update your package.json to include the script for combining schemas and running Prisma commands:
+
+{
+  "scripts": {
+    "combine-schema": "node concatSchemas.js",
+    "prisma-migrate": "npm run combine-schema && prisma migrate dev --schema=prisma/combined-schema.prisma",
+    "prisma-generate": "npm run combine-schema && prisma generate --schema=prisma/combined-schema.prisma",
+    "start": "node src/app.js"
+  }
+}
+
+Step 6: Modify Prisma Client Initialization
+Modify your Prisma client initialization to use the combined schema:
+
+// src/prisma/prismaClient.js
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
+module.exports = prisma;
+
+
+Step 7: Run Your Scripts
+Run your migration and generate commands using the updated scripts:
+
+npm run prisma-migrate
+npm run prisma-generate
+
+
+
+
