@@ -22,23 +22,25 @@ model Post {
   updatedAt DateTime @updatedAt
   title     String   @db.VarChar(255)
   content   String?
-  published Boolean  @default(false)
-  author    User     @relation(fields: [authorId], references: [id])
+  imageUrl  String?
+  author    User     @relation("UserToPost", fields: [authorId], references: [id])
   authorId  Int
 }
 
 model Profile {
-  id     Int     @id @default(autoincrement())
-  bio    String?
-  user   User    @relation(fields: [userId], references: [id])
-  userId Int     @unique
+  id      Int    @id @default(autoincrement())
+  bio     String
+  userId  Int    @unique
+  user    User   @relation("UserToProfile", fields: [userId], references: [id])
 }
 
 model User {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  name    String?
-  password  String?
-  posts   Post[]
-  profile Profile?
+  id       Int      @id @default(autoincrement())
+  email    String   @unique
+  name     String?
+  password String?
+  posts    Post[]   @relation("UserToPost")
+  profile  Profile? @relation("UserToProfile")
+
+
 }

@@ -2,7 +2,9 @@ const prisma = require('../prisma/prismaClient');
 
 class UserModel {
   static async showAllUser() {
-    return await prisma.user.findMany();
+    return await prisma.user.findMany({
+      include: { posts: true }
+    });
   }
 
   static async getSingleUser(date) {

@@ -1,6 +1,6 @@
 model Profile {
-  id     Int     @id @default(autoincrement())
-  bio    String?
-  user   User    @relation(fields: [userId], references: [id])
-  userId Int     @unique
+  id      Int    @id @default(autoincrement())
+  bio     String
+  userId  Int    @unique
+  user    User   @relation("UserToProfile", fields: [userId], references: [id])
 }

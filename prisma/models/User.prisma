@@ -1,8 +1,10 @@
 model User {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  name    String?
-  password  String?
-  posts   Post[]
-  profile Profile?
+  id       Int      @id @default(autoincrement())
+  email    String   @unique
+  name     String?
+  password String?
+  posts    Post[]   @relation("UserToPost")
+  profile  Profile? @relation("UserToProfile")
+
+
 }
