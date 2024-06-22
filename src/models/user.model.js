@@ -17,7 +17,8 @@ class UserModel {
       throw new Error('Email or ID must be provided');
     }
     return await prisma.user.findUnique({ 
-        where: whereCondition 
+        where: whereCondition ,
+        include:{posts:true}
     });
   }
 
