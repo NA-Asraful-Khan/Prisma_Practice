@@ -5,12 +5,14 @@ const postRoute = require('./routes/post.route')
 const app = express();
 const port = 3000;
 
-app.use(express.json());
-// // Parse JSON bodies
-// app.use(bodyParser.json());
+// app.use(express.json());
 
-// // Parse URL-encoded bodies
-// app.use(bodyParser.urlencoded({ extended: true }));
+// Parse JSON bodies
+app.use(bodyParser.json());
+
+// Parse URL-encoded bodies
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/uploads', express.static('src/uploads'))
 
 app.use('/users', userRoute);
 app.use('/posts', postRoute);

@@ -3,7 +3,7 @@ const { postValidate } = require('../validate/Post.validate')
 
 const createPost = async (req, res) => {
     const { title, content} = req.body;
-    const imageUrl = `http://localhost:3000/uploads/`;
+    const imageUrl = `http://localhost:3000/uploads/${req.file.filename}`;
     const authorId = req.userData.userId;
 
     // Validation
