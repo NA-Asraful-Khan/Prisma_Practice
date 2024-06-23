@@ -1,6 +1,7 @@
 const cloudinary = require('../utils/cloudinary');
 const PostModel = require("../models/post.model");
 const { postValidate } = require("../validate/post.validate");
+const fs = require('fs');
 
 
 
@@ -36,6 +37,11 @@ const createPost = async (req, res) => {
         // Create post
         const postData = { title, content, imageUrl, authorId };
         const createdPost = await PostModel.createPost(postData);
+
+        // Clean up the temp file
+        fs.unlink(image.tempFilePath, (err) => {
+            if (err) console.error("Failed to delete temp file:", err);
+        });
 
         res.status(201).json({
             message: "Post Created Successfully",
