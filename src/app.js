@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const userRoute = require('./routes/user.route')
 const postRoute = require('./routes/post.route')
+const fileUpload = require('express-fileupload');
 const app = express();
 const port = 3000;
 
@@ -12,6 +13,13 @@ app.use(bodyParser.json());
 
 // Parse URL-encoded bodies
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(fileUpload({
+  useTempFiles: true,
+  tempFileDir: 'C:/temp/'
+}));
+
+
 app.use('/uploads', express.static('src/uploads'))
 
 app.use('/users', userRoute);
