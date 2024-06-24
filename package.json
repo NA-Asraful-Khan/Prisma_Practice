@@ -7,7 +7,8 @@
     "combine-schema": "node concatSchemas.js",
     "prisma-migrate": "npm run combine-schema && prisma migrate dev --schema=prisma/combined-schema.prisma",
     "prisma-generate": "npm run combine-schema && prisma generate --schema=prisma/combined-schema.prisma",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx prisma db push && npx prisma generate && next build"
   },
   "keywords": [],
   "author": "",
