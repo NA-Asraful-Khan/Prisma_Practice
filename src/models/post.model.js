@@ -19,6 +19,27 @@ class PostModel {
           }
     }
 
+    static async updatePost(postData,paramId) {
+        try {
+            const newPost = await prisma.post.update({
+                where:{
+                    id:paramId
+                },
+                data: {
+                  title: postData.title,
+                  content: postData.content,
+                  imageUrl: postData.imageUrl,
+                  authorId: postData.authorId,
+                },
+              });
+            return newPost;
+        } catch (error) {
+            throw new Error(`Could not Update Post: ${error.message}`);
+        }finally {
+            await prisma.$disconnect();
+          }
+    }
+
     static async showAllPost() {
         return await prisma.post.findMany({
             include: { 
@@ -33,7 +54,20 @@ class PostModel {
 
     static async getSinglePost(data) {
         return await prisma.post.findUnique({
-            where: { email: data.email } 
+            where: { id: data.id } ,
+            include: { 
+                author: {
+                    select: {
+                    email: true,
+                    name: true
+                    }
+              } }
+        });
+    }
+
+    static async checkPost(data) {
+        return await prisma.post.findUnique({
+            where: { id: data }
         });
     }
 

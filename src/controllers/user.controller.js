@@ -136,13 +136,13 @@ const showSingle=async(req, res)=> {
     const data={id:id}
     
     try {
-        const post = await UserModel.getSingleUser(data);
+        const user = await UserModel.getSingleUser(data);
 
         if (post) {
-            res.status(200).json(post);
+            res.status(200).json(user);
         } else {
             res.status(404).json({
-                message: "Post Not Found",
+                message: "User Not Found",
             });
         }
     } catch (err) {
