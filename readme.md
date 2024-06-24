@@ -15,7 +15,7 @@ Below are the details of the available API endpoints for creating, reading, upda
 **Description:** This endpoint creates a User
 **Request:**
 - Method: POST
-- URL: `http://localhost:3000/users/sign-up`
+- URL: `https://prisma-practice-psi.vercel.app/users/sign-up`
 - Headers:
   - `Content-Type: application/json`
 - Body (example):
@@ -32,7 +32,7 @@ Below are the details of the available API endpoints for creating, reading, upda
 
 **Request:**
 - Method: POST
-- URL: `http://localhost:3000/users/login`
+- URL: `https://prisma-practice-psi.vercel.app/users/login`
 - Headers:
   - `Content-Type: application/json`
 - Body (example):
@@ -59,7 +59,7 @@ json
 
 **Request:**
 - Method: Delete
-- URL: `http://localhost:3000/users/delete`
+- URL: `https://prisma-practice-psi.vercel.app/users/delete`
 
 # Post CRUD
 ### 1. Create a Post using JWT token
@@ -68,7 +68,7 @@ json
 **Description:** This endpoint creates a User
 **Request:**
 - Method: POST
-- URL: `http://localhost:3000/posts`
+- URL: `https://prisma-practice-psi.vercel.app/posts`
 - Headers:
   - `Content-Type: multipart/form-data`
 - Body (example):
@@ -85,6 +85,6 @@ json
 
 **Request:**
 - Method: GET
-- URL: `http://localhost:3000/posts`
+- URL: `https://prisma-practice-psi.vercel.app/posts`
 
 
