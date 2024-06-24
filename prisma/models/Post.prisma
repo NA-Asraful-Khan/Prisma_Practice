@@ -1,10 +1,10 @@
 model Post {
-  id        Int      @id @default(autoincrement())
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  title     String   @db.VarChar(255)
+  title     String   
   content   String?
   imageUrl  String?
-  author    User     @relation("UserToPost", fields: [authorId], references: [id], onDelete: Cascade)
-  authorId  Int
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String @db.ObjectId
 }

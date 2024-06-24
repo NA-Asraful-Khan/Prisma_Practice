@@ -111,6 +111,7 @@ const login=async(req, res)=> {
 
 const deleteUser=async(req, res) =>{
     const userId = req.userData.userId;
+    console.log(userId)
 
     UserModel.deleteUser(userId).then(result => {
         if (result) {

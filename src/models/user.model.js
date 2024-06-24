@@ -8,11 +8,12 @@ class UserModel {
   }
 
   static async getSingleUser(data) {
+    
     let whereCondition;
     if (data.email) {
       whereCondition = { email: data.email };
     } else if (data.id) {
-      whereCondition = { id: parseInt(data.id) };
+      whereCondition = { id: data.id };
     } else {
       throw new Error('Email or ID must be provided');
     }
