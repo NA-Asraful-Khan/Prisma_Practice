@@ -1,6 +1,6 @@
 const cloudinary = require('../utils/cloudinary');
 const PostModel = require("../models/post.model");
-const { postValidate } = require("../validate/post.validate");
+const { postValidate } = require("../validate/Post.validate");
 const fs = require('fs');
 
 
