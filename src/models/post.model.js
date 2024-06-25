@@ -40,16 +40,10 @@ class PostModel {
           }
     }
 
-    static async showAllPost() {
-        return await prisma.post.findMany({
-            include: { 
-                author: {
-                    select: {
-                    email: true,
-                    name: true
-                    }
-              } }
-          });
+    static async checkPost(data) {
+        return await prisma.post.findUnique({
+            where: { id: data }
+        });
     }
 
     static async getSinglePost(data) {
@@ -65,20 +59,18 @@ class PostModel {
         });
     }
 
-    static async checkPost(data) {
-        return await prisma.post.findUnique({
-            where: { id: data }
-        });
-    }
-
     
-
-
-    static async deleteUser(userid) {
-        return await prisma.user.delete({
-            where: { id: userid }
-        });
+    static async showAllPost() {
+        return await prisma.post.findMany({
+            include: {author: true}
+          });
     }
+
+    static async deletePost(postId) {
+        return await prisma.user.delete({
+            where:{id:postId}
+        });
+      }
 }
 
 module.exports = PostModel;

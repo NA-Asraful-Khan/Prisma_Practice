@@ -61,6 +61,7 @@ const showAllPost = async (req, res) => {
         const users = await PostModel.showAllPost();
         res.json(users);
     } catch (error) {
+        console.error('Error fetching posts with author:', error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 };
@@ -144,10 +145,43 @@ const updatePost = async (req, res) => {
     }
 };
 
+const deletePost = async (req, res) => {
+    const paramId = req.params.id;
+    const authorId = req.userData.userId; // Assuming userData contains the current user's ID
+
+    try {
+        // Retrieve the existing post
+        const existingPost = await PostModel.checkPost(paramId);
+        if (!existingPost) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+
+        // Check if the current user is the author of the post
+        if (existingPost.authorId.toString() !== authorId.toString()) {
+            return res.status(403).json({ message: "You are not authorized to delete this post" });
+        }
+
+        // Delete the post
+        await PostModel.deletePost(paramId);
+
+        res.status(200).json({
+            message: "Post Deleted Successfully",
+        });
+    } catch (error) {
+        console.error("Error deleting post:", error);
+        res.status(500).json({
+            message: "Something Went Wrong",
+            error: error.message || "Internal Server Error",
+        });
+    }
+};
+
+
 
 module.exports = {
     createPost,
     showAllPost,
     showSinglePost,
-    updatePost
+    updatePost,
+    deletePost
 };

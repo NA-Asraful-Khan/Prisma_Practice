@@ -23,8 +23,8 @@ model Post {
   title     String   
   content   String?
   imageUrl  String?
-  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId  String @db.ObjectId
+  authorId  String  @db.ObjectId
+  author    User    @relation(fields: [authorId], references: [id], onDelete: Cascade)
 }
 
 model Profile {

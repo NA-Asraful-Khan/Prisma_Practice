@@ -9,6 +9,7 @@ router.post('/',checkAuthMiddleware.checkAuth,PostController.createPost)
 router.get('/',PostController.showAllPost)
 router.get('/:id',PostController.showSinglePost)
 router.put('/:id',checkAuthMiddleware.checkAuth,PostController.updatePost)
+router.delete('/:id',checkAuthMiddleware.checkAuth,PostController.deletePost)
 
 
 
