@@ -37,6 +37,14 @@ class UserModel {
         where:{id:userid}
     });
   }
+
+  static async checkUser(data) {
+    return await prisma.user.findUnique({
+        where: { id: data }
+    });
 }
+}
+
+
 
 module.exports = UserModel;

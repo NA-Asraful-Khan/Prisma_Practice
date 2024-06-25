@@ -112,28 +112,41 @@ const login=async(req, res)=> {
     }
 }
 
-const deleteUser=async(req, res) =>{
+const deleteUser = async (req, res) => {
     const userId = req.userData.userId;
-    console.log(userId)
+    console.log(userId);
 
-    UserModel.deleteUser(userId).then(result => {
+    try {
+        // Retrieve the existing User
+        const existingUser = await UserModel.checkUser(userId);
+        if (!existingUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // Check if the current user is Logged In
+        if (existingUser.id.toString() !== userId.toString()) {
+            return res.status(403).json({ message: "You are not authorized to delete this post" });
+        }
+
+
+        const result = await UserModel.deleteUser(userId);
         if (result) {
             res.status(200).json({
                 message: "User Deleted Successfully"
-            })
+            });
         } else {
             res.status(404).json({
                 message: "User Not Found"
-            })
+            });
         }
-    }).catch(err => {
-        console.error(err)
+    } catch (err) {
+        console.error(err);
         res.status(500).json({
             message: "Something Went Wrong",
             error: err
-        })
-    });
-}
+        });
+    }
+};
 
 const showSingle=async(req, res)=> {
     const id = req.params.id;
