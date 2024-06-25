@@ -62,12 +62,18 @@ class PostModel {
     
     static async showAllPost() {
         return await prisma.post.findMany({
-            include: {author: true}
+            include: { 
+                author: {
+                    select: {
+                    email: true,
+                    name: true
+                    }
+              } }
           });
     }
 
     static async deletePost(postId) {
-        return await prisma.user.delete({
+        return await prisma.post.delete({
             where:{id:postId}
         });
       }
