@@ -45,6 +45,7 @@ const signup = async (req, res)=> {
         });
 
     } catch (err) {
+        console.error(err)
         res.status(500).json({
             message: "Something went wrong",
             error: err.message
@@ -57,6 +58,7 @@ const showAllUser=async (req, res) => {
       const users = await UserModel.showAllUser();
       res.json(users);
     } catch (error) {
+        console.error(error)
       res.status(500).json({ error: 'Internal Server Error' });
     }
   }
@@ -102,6 +104,7 @@ const login=async(req, res)=> {
             token: token
         });
     } catch (error) {
+        console.error(error)
         res.status(500).json({
             message: "Something went wrong",
             error: error.message
@@ -124,6 +127,7 @@ const deleteUser=async(req, res) =>{
             })
         }
     }).catch(err => {
+        console.error(err)
         res.status(500).json({
             message: "Something Went Wrong",
             error: err
@@ -138,7 +142,7 @@ const showSingle=async(req, res)=> {
     try {
         const user = await UserModel.getSingleUser(data);
 
-        if (post) {
+        if (user) {
             res.status(200).json(user);
         } else {
             res.status(404).json({
@@ -146,6 +150,7 @@ const showSingle=async(req, res)=> {
             });
         }
     } catch (err) {
+        console.error(err)
         res.status(500).json({
             message: "Something Went Wrong",
             error: err.message,

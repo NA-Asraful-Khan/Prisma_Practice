@@ -81,6 +81,7 @@ const showSinglePost = async (req, res) =>  {
             });
         }
     } catch (err) {
+        console.error("Error updating post:", err);
         res.status(500).json({
             message: "Something Went Wrong",
             error: err.message,
